@@ -48,4 +48,6 @@ public class Model {
 		return this.grafo.vertexSet().size();
 				
 	}
+	
+
 }
