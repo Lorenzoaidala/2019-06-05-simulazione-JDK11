@@ -25,7 +25,7 @@ public class FXMLController {
     private URL location;
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxMese"
     private ComboBox<?> boxMese; // Value injected by FXMLLoader
@@ -47,7 +47,21 @@ public class FXMLController {
 
     @FXML
     void doCreaReteCittadina(ActionEvent event) {
-
+    	txtResult.clear();
+    	Integer anno = boxAnno.getValue();
+    	if(anno==null) {
+    		txtResult.setText("ERRORE - Selzionare un anno.");
+    		return;
+    	}
+    	model.creaGrafo(anno);
+    	txtResult.setText("GRAFO CREATO.\n");
+    	txtResult.appendText("VERTICI: "+model.getNVerici()+"\n");
+    	txtResult.appendText("ARCHI: "+model.getNArchi()+"\n");
+    	
+    	for(Integer d : model.getVertici()) {
+    		txtResult.appendText("Distretto - "+d+"\n");
+    		txtResult.appendText(model.getAdiacenti(d).toString()+"\n");
+    	}
     }
 
     @FXML
@@ -69,5 +83,6 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	boxAnno.getItems().addAll(model.getAnni());
     }
 }

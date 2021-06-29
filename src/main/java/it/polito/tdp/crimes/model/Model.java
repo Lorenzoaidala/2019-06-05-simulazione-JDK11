@@ -1,5 +1,10 @@
 package it.polito.tdp.crimes.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -17,6 +22,10 @@ public class Model {
 	
 	public Model() {
 		dao=new EventsDao();
+	}
+	
+	public List<Integer> getAnni(){
+		return dao.getAnni();
 	}
 	
 	public void creaGrafo(int anno) {
@@ -47,6 +56,22 @@ public class Model {
 	public int getNVerici() {
 		return this.grafo.vertexSet().size();
 				
+	}
+	
+	public List<Adiacente> getAdiacenti(Integer distretto){
+		
+		List<Adiacente> result = new ArrayList<>();
+		
+		for(Integer e : Graphs.neighborListOf(this.grafo, distretto)) {
+			Adiacente a = new Adiacente(e, this.grafo.getEdgeWeight(this.grafo.getEdge(distretto, e)));
+			result.add(a);
+		}
+		Collections.sort(result);
+		return result;
+	}
+	
+	public Set<Integer> getVertici(){
+		return this.grafo.vertexSet();
 	}
 	
 
