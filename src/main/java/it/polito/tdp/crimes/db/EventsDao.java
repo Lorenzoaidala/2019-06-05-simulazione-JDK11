@@ -56,5 +56,49 @@ public class EventsDao {
 			return null ;
 		}
 	}
+	
+	public List<Integer> getAnni(){
+		String sql ="SELECT DISTINCT YEAR(reported_date) AS anno "
+				+ "FROM events "
+				+ "ORDER BY YEAR(reported_date)";
+		List<Integer> result = new ArrayList<Integer>();
+		Connection conn = DBConnect.getConnection();
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			
+			while(res.next()) {
+				result.add(res.getInt("anno"));
+			}
+			conn.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return result;
+	}
+	
+	public List<Integer> getVertici(){
+		String sql="SELECT distinct district_id as id "
+				+ "FROM events "
+				+ "ORDER BY district_id";
+		List<Integer> result = new ArrayList<Integer>();
+		Connection conn = DBConnect.getConnection();
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			
+			while(res.next()) {
+				result.add(res.getInt("id"));
+			}
+			conn.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return result;
+	}
+	
+	p
 
 }
